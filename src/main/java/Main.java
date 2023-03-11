@@ -3,14 +3,14 @@ import java.util.Scanner;
 class Main {
     public static void main(String[] args) throws IncorrectValueException {
         Scanner scanner = new Scanner(System.in);
-        int[] books = {14, 16, 19, 32, 32, 32, 56, 69, 72};
+        Integer[] books = {14, 16, 19, 32, 32, 32, 56, 69, 72};
 
         System.out.println("Введите размер новой книги:");
         int book = scanner.nextInt();
         System.out.printf("Книг на полке с количеством страниц больше %d: %d", book, detAmountLargerBooks(books, book));
     }
 
-    public static int detAmountLargerBooks(int[] books, int book) throws IncorrectValueException {
+    public static int detAmountLargerBooks(Integer[] books, int book) throws IncorrectValueException {
         if (book <= 0) {
             throw new IncorrectValueException();
         }

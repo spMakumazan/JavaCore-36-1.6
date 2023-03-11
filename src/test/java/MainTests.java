@@ -2,14 +2,27 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 public class MainTests {
 
-    static int[] books;
+    static Integer[] books;
 
     @BeforeAll
     public static void createArray() {
-        books = new int[]{14, 16, 19, 32, 32, 32, 56, 69, 72};
+        books = new Integer[]{14, 16, 19, 32, 32, 32, 56, 69, 72};
+    }
+
+    public static Stream<Arguments> addTestDetAmountLargerBooksWithParameters() {
+        return Stream.of(Arguments.of(16, 7), Arguments.of(73, 0),
+                Arguments.of(32, 3), Arguments.of(7, 9));
     }
 
     @Test
@@ -19,7 +32,7 @@ public class MainTests {
 
         int result = Main.detAmountLargerBooks(books, book);
 
-        Assertions.assertEquals(expected, result);
+        assertThat(expected, equalTo(result));
     }
 
     @Test
@@ -29,7 +42,26 @@ public class MainTests {
 
         int result = Main.detAmountLargerBooks(books, book);
 
-        Assertions.assertEquals(expected, result);
+        assertThat(expected, equalTo(result));
+    }
+
+    @ParameterizedTest
+    @MethodSource("addTestDetAmountLargerBooksWithParameters")
+    public void testDetAmountLargerBooksWithParameters(int book, int expected) throws IncorrectValueException {
+
+        int result = Main.detAmountLargerBooks(books, book);
+
+        assertThat(expected, equalTo(result));
+    }
+
+    @Test
+    public void testInitialArray1() {
+        assertThat(books, not(emptyArray()));
+    }
+
+    @Test
+    public void testInitialArray2() {
+        assertThat(books, arrayWithSize(9));
     }
 
     @Test
